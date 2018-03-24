@@ -1,0 +1,47 @@
+.border-light
+{
+    border-color: #e8e8e8 !important;
+}
+
+.divSize
+{
+    /* margin: 5%; */
+    /* padding: 2%; */
+    margin-left: 6%;
+    margin-top: 5%;
+    /* margin-right: 5%; */
+}
+
+.prodDes
+{
+    font-size: x-large;
+    font-weight: lighter;
+    line-height: 1.1;
+    color:#00639e
+}
+
+.prodImg
+{
+    margin: 5%;
+}
+
+.prodPrice
+{
+    font-weight: lighter;
+    margin-top: 15%;
+}
+
+.prodColor
+{
+    font-size: small;
+}
+
+.aligContentBelow
+{
+    margin-top: 5%;
+}
+
+.prodQuantity
+{
+    width: 70px;
+}
