@@ -5,9 +5,9 @@ import onlinestore.model.Phone;
 import java.util.List;
 
 public interface PhoneDAO {
-	public void addPhone(Integer key, Phone item);
+	void addPhone(Integer key, Phone item);
 
-	public List<Phone> getPhone();
+	List<Phone> getPhone();
 
-	public Phone getPhoneItem(Integer key);
+	Phone getPhoneItem(Integer key);
 }

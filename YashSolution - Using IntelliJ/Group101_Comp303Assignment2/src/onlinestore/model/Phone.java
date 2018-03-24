@@ -10,6 +10,7 @@ public class Phone {
     private double phonePrice;
     private int quantity;
     private String company;
+    private String image;
 
     public String getCompany() {
         return company;
@@ -19,12 +20,13 @@ public class Phone {
         this.company = company;
     }
 
-    public Phone(int skuNo, String phoneDesc, double phonePrice, String company) {
+    public Phone(int skuNo, String phoneDesc, double phonePrice, String company, String image) {
         this.setItemNo(skuNo);
         this.setItemDesc(phoneDesc);
         this.setItemPrice(phonePrice);
         this.setQuantity(0);
         this.setCompany(company);
+        this.setImage(image);
     }
 
     public int getItemNo() {
@@ -72,4 +74,11 @@ public class Phone {
         return getItemNo() - phone.getItemNo();
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 }

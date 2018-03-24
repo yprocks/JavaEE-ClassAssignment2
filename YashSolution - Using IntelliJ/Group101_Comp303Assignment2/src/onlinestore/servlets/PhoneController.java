@@ -21,15 +21,15 @@ import java.util.List;
 @WebServlet("/phone")
 public class PhoneController extends HttpServlet {
 
-    PhoneDAO phoneDAO = PhoneDAOImpl.getInstance();
+    private PhoneDAO phoneDAO = PhoneDAOImpl.getInstance();
 
     public PhoneController() {
         super();
-        phoneDAO.addPhone(new Integer(22), new Phone(22, "Samsung Galaxy S7", 899.00, "Samsung"));
-        phoneDAO.addPhone(new Integer(14), new Phone(14, "iPhone 8 32GB", 999.00, "Apple"));
-        phoneDAO.addPhone(new Integer(6), new Phone(61, "LG G5", 699.20, "Life Good Co."));
-        phoneDAO.addPhone(new Integer(17), new Phone(17, "OnePlus5", 799.70, "One Plus"));
-        phoneDAO.addPhone(new Integer(207), new Phone(207, "Samsung Galaxy S8", 999.00, "Samsung"));
+        phoneDAO.addPhone(139, new Phone(139, "Samsung Galaxy S8", 999.00, "Samsung", "s8.png"));
+        phoneDAO.addPhone(122, new Phone(122, "iPhone 10 64GB", 1299.00, "Apple", "iPhoneX.png"));
+        phoneDAO.addPhone(121, new Phone(121, "iPhone 8 32GB", 899.00, "Apple", "iphone8.png"));
+        phoneDAO.addPhone(127, new Phone(127, "OnePlus5T", 999.70, "One Plus", "5t.png"));
+        phoneDAO.addPhone(148, new Phone(148, "Samsung Note 8", 1199.00, "Samsung", "Note8.png"));
 
     }
 
@@ -39,8 +39,7 @@ public class PhoneController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String base = "/jsp/";
-        String url = "";
-        String errorUrl = base + "error.jsp";
+        String url;
 
         String action = request.getParameter("action");
         if (action != null) {
@@ -48,19 +47,19 @@ public class PhoneController extends HttpServlet {
                 case "display-phone":
                     url = base + "order.jsp";
                     displayPhone(request, response, url);
-                    break;
+                    return;
                 case "add-to-cart":
                     url = base + "cart.jsp";
                     addToCart(request, response, url);
-                    break;
+                    return;
                 case "place-order":
                     url = base + "message.jsp";
                     confirmOrder(request, response, url);
-                    break;
+                    return;
             }
         }
 
-        sendErrorPage(request, response, errorUrl, "Url route not found.");
+        sendErrorPage(request, response, "/jsp/error.jsp", "Routing not valid");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -77,7 +76,7 @@ public class PhoneController extends HttpServlet {
             return;
         }
 
-        int orderNum = 0;
+        int orderNum;
 
         synchronized (this) {
             orderNum = (int) getServletContext().getAttribute("lastNum");
@@ -87,11 +86,10 @@ public class PhoneController extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        session.setAttribute("orderId", orderId + orderNum);
+        session.setAttribute("orderId", orderId.replaceAll("\\s+", "").toUpperCase() + orderNum);
 
-//        PhoneDAO mm = PhoneDAOImpl.getInstance();
         request.setAttribute("list", phoneDAO.getPhone());
-        request.getRequestDispatcher("jsp/order.jsp").forward(request, response);
+        request.getRequestDispatcher(url).forward(request, response);
     }
 
     private void addToCart(HttpServletRequest request, HttpServletResponse response, String url) throws ServletException, IOException {
@@ -135,20 +133,22 @@ public class PhoneController extends HttpServlet {
         String orderId = (String) session.getAttribute("orderId");
 
         if (orderId == null) {
-            message = "ERROR: No order identifier. Did you confirm or cancel already?";
+            message = "ERROR: Seems like your session has expired. Did you confirm or cancel already?";
+            request.setAttribute("errormessage", message);
         } else if (session.getAttribute("order") == null) {
             message = "ERROR: You have no order to confirm";
+            request.setAttribute("errormessage", message);
         } else if (request.getParameter("confirm").equals("CONFIRM")) {
-            message = "Order " + orderId + " confirmed. Your order will be delivered in 2 business days, by " + getOrderTime();
+            message = "Order " + orderId + " confirmed. Your order will be delivered in 5 business days, by " + getOrderTime();
+            request.setAttribute("message", message);
         } else if (request.getParameter("confirm").equals("CANCEL")) {
             message = "Order " + orderId + " Cancelled.";
+            request.setAttribute("message", message);
         }
 
         session.setAttribute("orderId", null);
 
         session.invalidate();
-
-        request.setAttribute("message", message);
 
         request.getRequestDispatcher(url).forward(request, response);
     }
@@ -161,7 +161,7 @@ public class PhoneController extends HttpServlet {
 
     private String getOrderTime() {
         Calendar cal = Calendar.getInstance();
-        long time = cal.getTimeInMillis() + 1200000; // 20 minutes = 1200000 ms;
+        long time = cal.getTimeInMillis() + 2400000; // will add 40 minutes to current time
         DateFormat df = DateFormat.getTimeInstance(DateFormat.LONG);
         return df.format(new Date(time));
     }

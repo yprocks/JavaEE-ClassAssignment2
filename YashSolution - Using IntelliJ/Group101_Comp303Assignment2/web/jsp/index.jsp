@@ -12,12 +12,32 @@
 </head>
 <body>
 <div>
-    <h1>Welcome to Online Phone Store</h1>
-    <p><div> ${requestScope.message}</div></p>
+    <h1 class="title">Welcome to Online Phone Store</h1>
+    <p>
+    <div class="error"> ${requestScope.message}</div>
+    </p>
     <hr/>
     <form action="${pageContext.request.contextPath}/phone?action=display-phone" method="post">
-        Enter your name: <input type="text" value="" name="orderId">
-        And click to <input type="submit" value="Place an order">
+        <table>
+            <tbody>
+            <tr>
+                <td>
+                    <label>Enter your name: </label>
+                </td>
+                <td>
+                    <input type="text" value="" name="orderId">
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                </td>
+                <td class="align-right">
+                    <input class="button btn-blue" type="submit" value="Place an order">
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </form>
 </div>
 </body>

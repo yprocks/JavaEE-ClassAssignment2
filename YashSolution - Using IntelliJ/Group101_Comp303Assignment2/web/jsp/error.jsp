@@ -9,8 +9,10 @@
 <html>
 <head>
     <title>Error</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/styles.css">
 </head>
 <body>
-    <h1>${requestScope.message}</h1>
+    <h2 class="error">${requestScope.message}</h2>
+    <a class="button btn-blue" href="/online-store">Go Home</a>
 </body>
 </html>

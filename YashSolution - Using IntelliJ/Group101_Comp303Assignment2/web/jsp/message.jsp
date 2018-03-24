@@ -10,8 +10,9 @@
 </head>
 <body>
 <div>
-    <h1>Thank you for your trade today.</h1>
-    <h2>${requestScope.message}</h2>
+    <h1>Thank you for your order.</h1>
+    <h2 class="error">${requestScope.errormessage}</h2>
+    <h2 class="message">${requestScope.message}</h2>
     Start new order : <a href="/online-store">Click here!</a>
 </div>
 </body>
