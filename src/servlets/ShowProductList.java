@@ -1,7 +1,9 @@
 package servlets;
 
-import model.ImageList;
-import model.ProductList;
+import dao.PhoneDAO;
+import dao.PhoneDAOImpl;
+import model.Phone;
+import model.PhoneList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,27 +18,20 @@ import java.util.Vector;
 @WebServlet("/ShowProductList")
 public class ShowProductList extends HttpServlet
 {
-    public Vector itemList;
-    public Vector imageList;
+    private PhoneDAO phoneDAO= PhoneDAOImpl.getInstance();
 
-    public void init() throws SecurityException
+    public ShowProductList()
     {
-        itemList = new Vector();
-        itemList.add(ProductList.getItem("05T89D45"));
-        itemList.add(ProductList.getItem("45GT891S"));
-        itemList.add(ProductList.getItem("E8GSF451"));
-        itemList.add(ProductList.getItem("89SDF154"));
-        itemList.add(ProductList.getItem("SDF498QW"));
-        itemList.add(ProductList.getItem("ERT14S45"));
-
-        imageList= new Vector();
-        imageList.add(ImageList.getItem("05T89D45"));
-        imageList.add(ImageList.getItem("45GT891S"));
-        imageList.add(ImageList.getItem("E8GSF451"));
-        imageList.add(ImageList.getItem("89SDF154"));
-        imageList.add(ImageList.getItem("SDF498QW"));
-        imageList.add(ImageList.getItem("ERT14S45"));
+        super();
+        phoneDAO.addPhone(1, new Phone("05T89D45", "Samsung Galaxy S9 (64GB)", 7, 959.78, "Grey", "img/s9-front-purple.png"));
+        phoneDAO.addPhone(2, new Phone("45GT891S", "Google Pixel 2 XL (128GB)", 5, 1239.00, "Black", "img/pixel_2_xl_front_bw.png"));
+        phoneDAO.addPhone(3, new Phone("E8GSF451", "Apple iPhone X (64GB)", 20, 1319.98, "Space Grey", "img/iphone_x_front_silver.png"));
+        phoneDAO.addPhone(4, new Phone("89SDF154", "Apple iPhone 8 Plus (256GB)", 10, 1495.54, "Gold", "img/iphone_8_plus_front_silver.png"));
+        phoneDAO.addPhone(5, new Phone("SDF498QW", "Samsung Galaxy S9+ (64GB)", 5, 1195.26, "Purple", "img/s9plus-front-gray.png"));
+        phoneDAO.addPhone(6, new Phone("ERT14S45", "LG V30 Plus Tone (64GB)", 10, 598.99, "Grey", "img/v30_front.png"));
     }
+
+
     //Response
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
@@ -46,12 +41,8 @@ public class ShowProductList extends HttpServlet
     //Request
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        RequestDispatcher dispatcher= null;
-
-        //Send to index.jsp page
-        dispatcher = request.getRequestDispatcher("/index.jsp");
-        request.setAttribute("list", itemList);
-        request.setAttribute("listImage", imageList);
+        RequestDispatcher dispatcher= request.getRequestDispatcher("/index.jsp");
+        request.setAttribute("list", phoneDAO.getAllPhone());
         dispatcher.forward(request, response);
     }
 }

@@ -1,6 +1,6 @@
-<%@ page import="model.ItemOrder" %>
+<%@ page import="model.PhoneOrder" %>
 <%@ page import="java.util.Vector" %>
-<%@ page import="controller.ShoppingCart" %>
+<%@ page import="servlets.ShoppingCart" %>
 <%@ page import="java.text.NumberFormat" %><%--
   Created by IntelliJ IDEA.
   User: John
@@ -14,9 +14,8 @@
     <title>Order Summary</title>
     <%--Bootstrap--%>
     <link rel="stylesheet" type="text/css" href="css/overwrite.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 
 </head>
 <body>
@@ -30,7 +29,6 @@
             if (cart == null || cart.getNumOrdered() == 0)
             {
                 out.println("<H2><I>No items in your cart...</I></H2>");
-                out.println("<a href=\"index.html\">Continue to Shop</a>");
             }
             else
             {
@@ -48,13 +46,13 @@
             <tbody>
             <%
                 Vector itemsOrdered = cart.getItemsOrdered();
-                ItemOrder order;
+                PhoneOrder order;
                 double cartTotal = 0;
                 double tempTotal= 0;
 
                 for(int i=0; i<itemsOrdered.size(); i++)
                 {
-                    order= (ItemOrder) itemsOrdered.elementAt(i);
+                    order= (PhoneOrder) itemsOrdered.elementAt(i);
                     tempTotal= order.getProdTotal();
                     cartTotal= tempTotal+ cartTotal;
             %>
@@ -102,7 +100,7 @@
         <form action="ShowProductList">
             <input class="btn btn-dark float-left" type="submit" value="Continue Shopping">
         </form>
-        <form action="">
+        <form action="ThankYou">
             <input class="btn btn-dark float-right" type="submit" value="Checkout">
         </form>
 

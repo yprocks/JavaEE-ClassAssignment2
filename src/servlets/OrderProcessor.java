@@ -1,7 +1,5 @@
 package servlets;
 
-import controller.ShoppingCart;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,10 +40,11 @@ public class OrderProcessor extends HttpServlet
             {
                 String numItemsString = request.getParameter("numItems");
                 String imgPath = request.getParameter("itemImg");
+                System.out.println(imgPath);
                 if(numItemsString ==null)
                 {
                     // If request specified an ID but no number,
-                    // then customers came here via an "Add Item to Cart"
+                    // then customers came here via an "Add Phone to Cart"
                     // button on a catalog page.
                     cart.addItem(itemSKU);
                 }
@@ -71,9 +70,7 @@ public class OrderProcessor extends HttpServlet
             } // end synchronized
 
 
-            RequestDispatcher dispatcher= null;
-            //Send to ShowOrder page
-            dispatcher = request.getRequestDispatcher("ShowOrder.jsp");
+            RequestDispatcher dispatcher= request.getRequestDispatcher("ShowOrder.jsp");
             dispatcher.forward(request, response);
         }
 
