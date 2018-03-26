@@ -1,0 +1,10 @@
+Instruction to execute: 
+
+1. Import the Group101_COMP303Assignment2.war in workspace or import the Group102_COMP303Assignment2 project as existing project in the workspace
+2. Select WildFly.10.x as a Server while importing the project
+3. Right click on the project and select Run as -> Run on server (Select Wildfly)
+4. Server should start and the project should run on the url :
+   http://localhost:8080/online-store/
+
+**** IMP (Instruction for Eclipse) ****
+If something is wrong with the context-path right click on the project and select Properties and navigate to Web Project Settings and change Context root to online-store
